@@ -192,10 +192,12 @@ cga_putc(int c)
 	}
 
 	// What is the purpose of this?
+	// if the screen is full
 	if (crt_pos >= CRT_SIZE) {
 		int i;
-
+		// move all the content one line above
 		memmove(crt_buf, crt_buf + CRT_COLS, (CRT_SIZE - CRT_COLS) * sizeof(uint16_t));
+		// clear the last line and set the cursor
 		for (i = CRT_SIZE - CRT_COLS; i < CRT_SIZE; i++)
 			crt_buf[i] = 0x0700 | ' ';
 		crt_pos -= CRT_COLS;
